@@ -1,6 +1,6 @@
 #include "SwitchMachine.h"
 
-const byte pulse = 10;  // msec
+const byte pulse = 20;  // msec
 
 SwitchMachine::SwitchMachine(
   E_TYPE type,

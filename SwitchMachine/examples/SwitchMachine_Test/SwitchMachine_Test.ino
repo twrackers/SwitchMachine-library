@@ -1,6 +1,6 @@
 #include <Pulser.h>
 
-#include "SwitchMachine.h"
+#include <SwitchMachine.h>
 
 const int P1 = 5;
 const int P2 = 4;
