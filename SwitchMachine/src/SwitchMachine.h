@@ -3,38 +3,45 @@
 
 #include <StateMachine.h>
 
-enum E_TYPE {
-  eWye,
-  eLH,
-  eRH
-};
-enum E_ROUTE {
-  eLeft,
-  eRight,
-  eMain,
-  eDiverging
-};
+/*
+ * NOTE: The KATO switch machines are mounted in four types of turnouts:
+ *	- left-hand (#6 718mm, #4 481mm, compact 150mm)
+ *	- right-hand (same sizes as left-hand)
+ *	- wye (481mm)
+ *	- double crossover (approx #5 end-to-end)
+ * The solenoids in the switch machines are wired such that applying the
+ * current to throw the points will work consistently across the various
+ * types of turnouts depending on the direction of the current flow.
+ *
+ * Current flow black-to-red wires:
+ *	- LH, RH throw to Main route
+ *	- Y throws to Left route
+ *	- DX throws to Parallel routes
+ * Current flow red-to-black wires:
+ *	- LH, RH throw to Diverging route
+ *	- Y throws to Right route
+ *	- DX throws to Crossover routes
+ */
 
 class SwitchMachine : public StateMachine
 {
+  public:
+	enum E_POLARITY {
+		eBlkToRed,
+		eRedToBlk
+	};
+
   private:
-    enum E_ROUTE_IMPL {
-      eUnk,
-      eL,
-      eR
-    };
     unsigned long m_switchTime;
-    E_ROUTE_IMPL  m_routeCur;
-    E_ROUTE_IMPL  m_routeCmd;
+    E_POLARITY    m_current;
+    E_POLARITY    m_command;
     bool          m_state;
-    const E_TYPE  m_type;
-    const byte    m_wireRed;
-    const byte    m_wireBlack;
-    const byte    m_enable;
+    const byte    m_pinRed;
+    const byte    m_pinBlk;
+    const byte    m_pinEna;
     
   public:
     SwitchMachine(
-      E_TYPE type,
       const byte red, 
       const byte black, 
       const byte enable
@@ -42,7 +49,7 @@ class SwitchMachine : public StateMachine
 
     virtual bool update();
 
-    bool setRoute(const E_ROUTE route);
+    void throwPoints(const E_POLARITY which);
 };
 
 #endif
