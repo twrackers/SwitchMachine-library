@@ -2,54 +2,58 @@
 #define _SWITCH_MACHINE__H_
 
 #include <StateMachine.h>
+#include <Triad.h>
 
 /*
- * NOTE: The KATO switch machines are mounted in four types of turnouts:
- *	- left-hand (#6 718mm, #4 481mm, compact 150mm)
- *	- right-hand (same sizes as left-hand)
- *	- wye (481mm)
- *	- double crossover (approx #5 end-to-end)
- * The solenoids in the switch machines are wired such that applying the
- * current to throw the points will work consistently across the various
- * types of turnouts depending on the direction of the current flow.
+ * NOTE: The KATO switch machines are used on four types of turnouts:
+ *	LH - left-hand
+ *	RH - right-hand
+ *	Y  - wye
+ *	DX - double crossover
  *
- * Current flow black-to-red wires:
- *	- LH, RH throw to Main route
- *	- Y throws to Left route
- *	- DX throws to Parallel routes
- * Current flow red-to-black wires:
- *	- LH, RH throw to Diverging route
- *	- Y throws to Right route
- *	- DX throws to Crossover routes
+ * Direction of current flow determines selected route.
+ *
+ *      Black=>Red    Red=>Black
+ * LH   main (right)  diverging (left)
+ * RH   main (left)   diverging (right)
+ * Y    left          right
+ * DX   thru          crossover
  */
 
 class SwitchMachine : public StateMachine
 {
   public:
-	enum E_POLARITY {
-		eBlkToRed,
-		eRedToBlk
-	};
-
+    enum E_DIR {
+      eRefresh,
+      eMain,
+      eDiverging
+    };
+    
   private:
     unsigned long m_switchTime;
-    E_POLARITY    m_current;
-    E_POLARITY    m_command;
+    E_DIR         m_current;
+    E_DIR         m_command;
     bool          m_state;
+    const byte    m_pinEna;
     const byte    m_pinRed;
     const byte    m_pinBlk;
-    const byte    m_pinEna;
+    
+    void setMain();
+    void setDiverging();
     
   public:
     SwitchMachine(
+      const byte enable,
       const byte red, 
-      const byte black, 
-      const byte enable
+      const byte black
+    );
+    SwitchMachine(
+      const Triad<byte>& triad
     );
 
     virtual bool update();
 
-    void throwPoints(const E_POLARITY which);
+    void throwPoints(const E_DIR which);
 };
 
 #endif
