@@ -44,7 +44,7 @@ bool SwitchMachine::update()
 {
   if (!StateMachine::update()) return false;
   if (m_state) {
-    if ((millis() - m_switchTime) >= 0) {
+    if ((long) (millis() - m_switchTime) >= 0) {
       digitalWrite(m_pinEna, LOW);
       m_state = false;
     }
