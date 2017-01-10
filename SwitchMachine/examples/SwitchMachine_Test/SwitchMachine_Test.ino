@@ -37,11 +37,11 @@ void loop()
   if (ctrl.read()) {
     // ... throw points to other position
     // (LH RH diverging, Y right, DX crossover).
-    sms[0]->throwPoints(SwitchMachine::eRedToBlk);
+    sms[0]->throwPoints(SwitchMachine::eDiverging);
   } else {
     // ... otherwise throw points to default
     // position.
-    sms[0]->throwPoints(SwitchMachine::eBlkToRed);
+    sms[0]->throwPoints(SwitchMachine::eMain);
   }
   // NOTE: SwitchMachine will activate driver and
   // move points only if commanded and current
