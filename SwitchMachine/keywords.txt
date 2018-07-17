@@ -5,7 +5,7 @@
 #######################################
 # Datatypes (KEYWORD1)
 #######################################
-SwitchMachine	KEYWORD1
+SwitchMachine KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
@@ -15,10 +15,10 @@ setRoute	KEYWORD2
 #######################################
 # Constants (LITERAL1)
 #######################################
-eLH	LITERAL1
+eLH LITERAL1
 eRH LITERAL1
-eWye LITERAL1
+eWye  LITERAL1
 eLeft LITERAL1
-eRight LITERAL1
+eRight  LITERAL1
 eMain LITERAL1
-eDiverging LITERAL1
+eDiverging  LITERAL1
