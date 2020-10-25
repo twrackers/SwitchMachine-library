@@ -1,6 +1,5 @@
 #include <Pulser.h>
 #include <SwitchMachine.h>
-#include <Triad.h>
 
 // Pin numbers are chosen to allow a standard servo
 // cable (white/red/black) to be used.
