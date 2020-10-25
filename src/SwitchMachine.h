@@ -2,7 +2,24 @@
 #define _SWITCH_MACHINE__H_
 
 #include <StateMachine.h>
-#include <Triad.h>
+
+// This is a convenience template class used to group three values or objects
+// of the same type into one struct.  This is most useful if you want to easily
+// create an array of these groups.
+//
+// Because this is a struct and not a class, all data members and methods are
+// public by default.
+
+template <class T>
+struct Triad {
+  T enable;
+  T red;
+  T black;
+  
+  // constructor
+  Triad(T e, T r, T b) :
+    enable(e), red(r), black(b) {}
+};
 
 /*
  * NOTE: The KATO switch machines are used on four types of turnouts:

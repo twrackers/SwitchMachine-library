@@ -30,7 +30,7 @@ SwitchMachine::SwitchMachine(
 
 // Convenience constructor
 SwitchMachine::SwitchMachine(const Triad<byte>& triad) :
-  SwitchMachine(triad.first, triad.second, triad.third)
+  SwitchMachine(triad.enable, triad.red, triad.black)
 {
 }
 
