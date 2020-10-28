@@ -3,8 +3,8 @@
 
 // Pin numbers are chosen to allow a standard servo
 // cable (white/red/black) to be used.
-const Triad<byte> swm1(4, 5, 6);
-const Triad<byte> swm2(7, 8, 9);
+const Triad swm1(4, 5, 6);
+const Triad swm2(7, 8, 9);
 
 // NOTE: Pointers to SwitchMachine objects should
 // be used so they can be created in sequence,

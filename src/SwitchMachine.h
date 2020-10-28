@@ -3,21 +3,20 @@
 
 #include <StateMachine.h>
 
-// This is a convenience template class used to group three values or objects
-// of the same type into one struct.  This is most useful if you want to easily
-// create an array of these groups.
+// Triad is a convenience structure used to group three GPIO pin numbers
+// into one struct.  This is most useful if you want to create an array of
+// pin groups.
 //
 // Because this is a struct and not a class, all data members and methods are
 // public by default.
 
-template <class T>
 struct Triad {
-  T enable;
-  T red;
-  T black;
+  byte enable;
+  byte red;
+  byte black;
   
   // constructor
-  Triad(T e, T r, T b) :
+  Triad(byte e, byte r, byte b) :
     enable(e), red(r), black(b) {}
 };
 
@@ -72,7 +71,7 @@ class SwitchMachine : public StateMachine
     
     // Constructor, assigns I/O pins in Triad struct
     SwitchMachine(
-      const Triad<byte>& triad
+      const Triad& triad
     );
 
     // Overrides StateMachine update method, returns true only when
