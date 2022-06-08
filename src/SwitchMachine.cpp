@@ -10,7 +10,7 @@ SwitchMachine::SwitchMachine(
   const byte enable,
   const byte red,
   const byte black 
-) : StateMachine(1, true),  // will update on 1 msec intervals
+) : StateMachine(5, true),  // will update on 5 msec intervals
   m_switchTime(0L),         // time when pulse is scheduled to end
   m_current(eDiverging),    // set current state to Diverging...
   m_command(eMain),         // ... and commanded state to Main, to force init
@@ -38,8 +38,8 @@ SwitchMachine::SwitchMachine(const Triad& triad) :
 // Turnout won't be thrown until enable pin is pulsed.
 void SwitchMachine::setDiverging()
 {
-  digitalWrite(m_pinRed, HIGH);
   digitalWrite(m_pinBlk, LOW);
+  digitalWrite(m_pinRed, HIGH);
 }
 
 // Set red and black pins to throw turnout to main route.
