@@ -1,14 +1,14 @@
 #ifndef _SWITCH_MACHINE__H_
 #define _SWITCH_MACHINE__H_
 
-#include <StateMachine.h>
-
 // Triad is a convenience structure used to group three GPIO pin numbers
 // into one struct.  This is most useful if you want to create an array of
 // pin groups.
 //
 // Because this is a struct and not a class, all data members and methods are
 // public by default.
+
+#include <StateMachine.h>
 
 struct Triad {
   byte enable;
