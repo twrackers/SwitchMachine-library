@@ -50,7 +50,7 @@ class SwitchMachine : public StateMachine
     unsigned long m_switchTime;   // time when pulse should terminate
     E_DIR         m_current;      // most recently completed command
     E_DIR         m_command;      // most recently received command
-    bool          m_state;        // true during pulse period
+    bool          m_pulse;        // true during pulse period
     const byte    m_pinEna;       // enable I/O pin
     const byte    m_pinRed;       // red I/O pin
     const byte    m_pinBlk;       // black I/O pin

@@ -12,20 +12,21 @@ SwitchMachine::SwitchMachine(
   const byte black 
 ) : StateMachine(5, true),  // will update on 5 msec intervals
   m_switchTime(0L),         // time when pulse is scheduled to end
-  m_current(eMain),         // set current state to Main...
-  m_command(eMain),         // ... and commanded state to Main
-  m_state(false),           // no pulse
+  m_current(eRefresh),      // set current state to Refresh...
+  m_command(eRefresh),      // ... and commanded state to Refresh
+  m_pulse(false),           // no pulse
   m_pinEna(enable),         // enable pin
   m_pinRed(red),            // red pin
   m_pinBlk(black)           // black pin
 {
-  // Set pins to output, initialize logic levels.
+  // Set pins to output, initialize logic levels to
+  // all output pins LOW.
   pinMode(m_pinEna, OUTPUT);
   digitalWrite(m_pinEna, LOW);
   pinMode(m_pinRed, OUTPUT);
-  digitalWrite(m_pinRed, HIGH);
+  digitalWrite(m_pinRed, LOW);
   pinMode(m_pinBlk, OUTPUT);
-  digitalWrite(m_pinBlk, HIGH);
+  digitalWrite(m_pinBlk, LOW);
 }
 
 // Convenience constructor
@@ -58,12 +59,12 @@ bool SwitchMachine::update()
   if (!StateMachine::update()) return false;
   
   // Are we in the middle of a pulse?
-  if (m_state) {
+  if (m_pulse) {
     // If so, and the pulse timeout has occurred...
     if ((long) (millis() - m_switchTime) >= 0) {
       // ... turn off the enable pulse, and change state.
       digitalWrite(m_pinEna, LOW);
-      m_state = false;
+      m_pulse = false;
     }
   } else {
     // If not in pulse state, is commanded setting different from current
@@ -94,7 +95,7 @@ bool SwitchMachine::update()
       digitalWrite(m_pinEna, HIGH);
       m_switchTime = millis() + pulse;
       // Set pulse-on state.
-      m_state = true;
+      m_pulse = true;
     }
   }
   // Return true because state has been updated.
