@@ -12,20 +12,20 @@ SwitchMachine::SwitchMachine(
   const byte black 
 ) : StateMachine(5, true),  // will update on 5 msec intervals
   m_switchTime(0L),         // time when pulse is scheduled to end
-  m_current(eDiverging),    // set current state to Diverging...
-  m_command(eMain),         // ... and commanded state to Main, to force init
+  m_current(eMain),         // set current state to Main...
+  m_command(eMain),         // ... and commanded state to Main
   m_state(false),           // no pulse
   m_pinEna(enable),         // enable pin
   m_pinRed(red),            // red pin
   m_pinBlk(black)           // black pin
 {
   // Set pins to output, initialize logic levels.
+  pinMode(m_pinEna, OUTPUT);
+  digitalWrite(m_pinEna, LOW);
   pinMode(m_pinRed, OUTPUT);
   digitalWrite(m_pinRed, HIGH);
   pinMode(m_pinBlk, OUTPUT);
   digitalWrite(m_pinBlk, HIGH);
-  pinMode(m_pinEna, OUTPUT);
-  digitalWrite(m_pinEna, LOW);
 }
 
 // Convenience constructor
